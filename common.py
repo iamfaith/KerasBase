@@ -50,7 +50,7 @@ class BaseTrainer(object):
                                                       monitor='loss')
         if self.has_train:
             from keras.models import load_model
-            print(files)
+            os.path.abspath(os.getcwd())
             self.model = tf.keras.models.load_model(BaseTrainer.__cp_folder + "/" + files[0])
 
 

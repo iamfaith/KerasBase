@@ -50,6 +50,8 @@ class BaseTrainer(object):
                                                       monitor='loss')
         if self.has_train:
             from keras.models import load_model
+            self.cp_file = files[0]
+            self.epoch = int(self.cp_file.split('-')[0])
             print("Load checkpoint:", files)
             self.model = tf.keras.models.load_model(BaseTrainer.__cp_folder + "/" + files[0])
 

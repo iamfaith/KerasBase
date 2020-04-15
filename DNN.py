@@ -38,11 +38,14 @@ class DNN(BaseTrainer):
         self.X_test = np.array(testT)
 
     def train(self):
+        batch_size = 64
+        nb_epoch = 105
         if self.has_train:
-            self.model.fit(self.X_train, self.y_train, epochs=5, batch_size=50,
+            nb_epoch = nb_epoch - self.epoch
+            print('new epoch', nb_epoch)
+            self.model.fit(self.X_train, self.y_train, epochs=batch_size, batch_size=batch_size,
                            callbacks=[self.checkpointer, self.csv_logger])
         else:
-            batch_size = 64
             # 1. define the network
             model = Sequential()
             model.add(Dense(1024, input_dim=41, activation='relu'))
@@ -51,7 +54,7 @@ class DNN(BaseTrainer):
             model.add(Activation('sigmoid'))
             model.compile(loss='binary_crossentropy', optimizer='adam', metrics=['accuracy'])
 
-            model.fit(self.X_train, self.y_train, batch_size=batch_size, nb_epoch=100,
+            model.fit(self.X_train, self.y_train, batch_size=batch_size, nb_epoch=nb_epoch,
                       callbacks=[self.checkpointer, self.csv_logger])
             model.save("./dnn1layer_model.hdf5")
 

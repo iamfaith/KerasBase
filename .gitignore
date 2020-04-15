@@ -2,3 +2,4 @@
 checkpoint/**
 .DS_store
 *.pyc
+.ipynb_checkpoints/**

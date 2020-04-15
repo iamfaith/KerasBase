@@ -61,5 +61,5 @@ class DNN(BaseTrainer):
 
 if __name__ == '__main__':
     dnn = DNN()
-    dnn.load_data(train='../kdd/binary/Training.csv', test='../kdd/binary/Testing.csv')
+    dnn.load_data(train='./kdd/binary/Training.csv', test='./kdd/binary/Testing.csv')
     dnn.train()

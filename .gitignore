@@ -1,0 +1,4 @@
+*.csv
+checkpoint/**
+.DS_store
+*.pyc

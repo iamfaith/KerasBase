@@ -43,7 +43,7 @@ class DNN(BaseTrainer):
         if self.has_train:
             nb_epoch = nb_epoch - self.epoch
             print('new epoch', nb_epoch)
-            self.model.fit(self.X_train, self.y_train, epochs=batch_size, batch_size=batch_size,
+            self.model.fit(self.X_train, self.y_train, batch_size=batch_size, nb_epoch=nb_epoch,
                            callbacks=[self.checkpointer, self.csv_logger])
         else:
             # 1. define the network

@@ -53,7 +53,7 @@ class DNN(BaseTrainer):
 
             model.fit(self.X_train, self.y_train, batch_size=batch_size, nb_epoch=100,
                       callbacks=[self.checkpointer, self.csv_logger])
-            model.save("/dnn1layer_model.hdf5")
+            model.save("./dnn1layer_model.hdf5")
 
 
 if __name__ == '__main__':

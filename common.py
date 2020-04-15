@@ -44,7 +44,7 @@ class BaseTrainer(object):
                     files.append(f)
         else:
             os.makedirs(BaseTrainer.__cp_folder)
-        files.sort(key=lambda f: int(filter(str.isdigit, f)), reverse=True)
+        files.sort(key=lambda f: f, reverse=True)
         self.csv_logger = CSVLogger(BaseTrainer.__log_name, separator=',', append=False)
         self.checkpointer = callbacks.ModelCheckpoint(filepath=BaseTrainer.cp_path, verbose=1, save_best_only=True,
                                                       monitor='loss')

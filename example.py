@@ -70,15 +70,15 @@ class CNN(BaseTrainer):
 
   # @Decorator.log(True)
   def load_data(self, **dict):
-        print(dict)
+#         print(dict)
         self.X_train = dict['train_x']
         self.y_train = dict['train_y']
         self.X_test = dict['test_x']
         self.y_test = dict['test_y']
 
-  def train(self, retrain=False):
+  def train(self, epochs=60, retrain=False):
     batch_size = 128
-    epochs = 130
+    #epochs = 130
     num_classes = 11
 
     input_shape = (128, 128, 3)
@@ -148,9 +148,9 @@ class CNN(BaseTrainer):
                 callbacks=[self.checkpointer],
                 verbose=1)
       self.model.save("./cnn_model.hdf5")
-      score = self.model.evaluate(self.X_test, self.y_test, verbose=1)
-      print('Test loss:', score[0])
-      print('Test accuracy:', score[1])
+  score = self.model.evaluate(self.X_test, self.y_test, verbose=1)
+  print('Test loss:', score[0])
+  print('Test accuracy:', score[1])
 
   def predict(self, x):
     return self.model.predict_classes(x)

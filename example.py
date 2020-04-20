@@ -73,8 +73,8 @@ class CNN(BaseTrainer):
         print(dict)
         self.X_train = dict['train_x']
         self.y_train = dict['train_y']
-        # self.X_test = dict['test_x']
-        # self.y_test = dict['test_y']
+        self.X_test = dict['test_x']
+        self.y_test = dict['test_y']
 
   def train(self, retrain=False):
     batch_size = 128
@@ -148,7 +148,7 @@ class CNN(BaseTrainer):
                 callbacks=[self.checkpointer],
                 verbose=1)
       self.model.save("./cnn_model.hdf5")
-      # score = self.model.evaluate(self.X_test, self.y_test, verbose=1)
+      score = self.model.evaluate(self.X_test, self.y_test, verbose=1)
       print('Test loss:', score[0])
       print('Test accuracy:', score[1])
 

@@ -48,18 +48,19 @@ class BaseTrainer(object):
             self.cp_file = files[0]
             self.epoch = int(self.cp_file.split('-')[0])
             print("Load checkpoint:", files)
-            self.model = tf.keras.models.load_model(BaseTrainer.__cp_folder + "/" + files[0])
+            self.model = keras.models.load_model(BaseTrainer.__cp_folder + "/" + files[0])
 
-
-
-
-
-
-
-
-
-
-
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
 from keras.models import Sequential
 from keras.layers import Dense, Dropout, Flatten
 from keras.layers import Conv2D, MaxPooling2D, BatchNormalization
@@ -67,24 +68,24 @@ from keras import backend as K
 import keras
 class CNN(BaseTrainer):
 
-  @Decorator.log(True)
+  # @Decorator.log(True)
   def load_data(self, **dict):
         print(dict)
         self.X_train = dict['train_x']
         self.y_train = dict['train_y']
-        self.X_test = dict['test_x']
-        self.y_test = dict['test_y']
+        # self.X_test = dict['test_x']
+        # self.y_test = dict['test_y']
 
   def train(self):
     batch_size = 128
-    epochs = 100
+    epochs = 130
     num_classes = 11
 
     input_shape = (128, 128, 3)
 
     if self.has_train:
-            nb_epoch = nb_epoch - self.epoch
-            print('new epoch', nb_epoch)
+            epochs = epochs - self.epoch
+            print('new epoch', epochs)
             self.model.fit(self.X_train, self.y_train, batch_size=batch_size, epochs=epochs,
                            callbacks=[self.checkpointer],  verbose=1)
     else:
@@ -147,9 +148,36 @@ class CNN(BaseTrainer):
                 callbacks=[self.checkpointer],
                 verbose=1)
       self.model.save("./cnn_model.hdf5")
-      score = self.model.evaluate(self.X_test, self.y_test, verbose=1)
+      # score = self.model.evaluate(self.X_test, self.y_test, verbose=1)
       print('Test loss:', score[0])
       print('Test accuracy:', score[1])
 
-  def predict(self):
-    pass
+  def predict(self, x):
+    return self.model.predict_classes(x)
+
+
+
+
+
+
+
+
+base = CNN()
+train_val_x = np.concatenate((train_x, val_x), axis=0)
+train_val_y = np.concatenate((trans(train_y), trans(val_y)), axis=0)
+print(train_val_x.shape, train_val_y.shape)
+# base.load_data(train_x=train_val_x, train_y=trans(train_y), test_x=val_x, test_y=trans(val_y))
+# base.train()
+result = base.predict(test_x)
+
+# class_result=np.argmax(result,axis=-1)
+# print(result.shape)
+prediction = np.round(result)
+print(result, prediction)
+with open("predict.csv", 'w') as f:
+    f.write('Id,Category\n')
+    for i, y in  enumerate(prediction):
+        # if np.sum(y) == 0:
+          # print(i, y, result[i])
+        # print(np.where(y == 1)[0])
+        f.write('{},{}\n'.format(i, y))

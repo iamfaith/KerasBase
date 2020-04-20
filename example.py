@@ -76,14 +76,14 @@ class CNN(BaseTrainer):
         # self.X_test = dict['test_x']
         # self.y_test = dict['test_y']
 
-  def train(self):
+  def train(self, retrain=False):
     batch_size = 128
     epochs = 130
     num_classes = 11
 
     input_shape = (128, 128, 3)
 
-    if self.has_train:
+    if self.has_train and not retrain:
             epochs = epochs - self.epoch
             print('new epoch', epochs)
             self.model.fit(self.X_train, self.y_train, batch_size=batch_size, epochs=epochs,
